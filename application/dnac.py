@@ -1,4 +1,5 @@
 import requests, base64
+from datetime import datetime, timedelta
 
 session = requests.Session()
 
@@ -18,19 +19,24 @@ def login(ip, username, password):
 
 
 def get_clients(ip, token):
-    data = {}
+    startTime = datetime.now() - timedelta(hours=1, minutes=00)
+    startTime = int(startTime.timestamp()) * 1000
+    print (type(startTime), startTime)
+    data = {
+        'startTime': startTime
+    }
     url = 'https://%s/api/assurance/v1/host' % ip
     headers = {
         'Content-Type' : 'application/json',
-        'Content-Length' : '2',
-        # 'X-Auth-Token' : token
-        'Cookie' : 'cisco-dna-core-shell-actionItemModal=false; X-JWT-ACCESS-TOKEN=%s' % token
+        # 'Content-Length' : '2',
+        'X-Auth-Token' : token
+        # 'Cookie' : 'cisco-dna-core-shell-actionItemModal=false; X-JWT-ACCESS-TOKEN=%s' % token
     }
-
-    print ('%s, %s' % (ip, token))
+    print (data)
+    # print ('%s, %s' % (ip, token))
     res = session.post(url, json=data, headers=headers, verify=False)
     # res = session.post(url, headers=headers, verify=False)
-    print(session, res.status_code, res.text)
+    # print(session, res.status_code, res.text)
     res_json = res.json()
     print('get_clients reponse :::: %s' % res_json)
     return res_json

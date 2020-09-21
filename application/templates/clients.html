@@ -1,0 +1,130 @@
+{% extends "home.html" %} {% block body %}
+
+
+<div class="container-fluid">
+    <!-- header -->
+    <div class="row header">
+        <div class="col col-10 ml-auto mr-auto">
+            <span class="logo1">Cisco</span>
+            <span class="logo2">DNA Center</span>
+        </div>
+    </div>
+
+
+    <!--  -->
+    <div class="row">
+        <div class="col-2 ml-auto">
+            <div id="tree"></div>
+        </div>
+        <div class="col-8 mr-auto">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">identifier</th>
+                        <th scope="col">IPv4 Address</th>
+                        <th scope="col">Device Type</th>
+                        <th scope="col">Health</th>
+                        <th scope="col">Usage</th>
+                        <th scope="col">Switch</th>
+                        <th scope="col">Port</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Last Seen</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody" class="">
+
+                </tbody>
+            </table>
+        </div>
+
+        <!-- <div style=" min-width:150px; ">
+            
+        </div>
+        <div class="col ">
+            
+        </div> -->
+    </div>
+</div>
+
+{% raw %}
+<script id="template" type="text/x-handlebars-template">
+    {{#each clients}}
+    <tr>
+        <td>{{hostType}} {{hostIpV4}}</td>
+        <td>{{hostIpV4}}</td>
+        <td>--</td>
+        <td>{{healthScore.0.score}}</td>
+        <td>{{usage}} kB</td>
+        <td>{{clientConnection}}</td>
+        <td>{{port}}</td>
+        <td>{{location}} </td>
+        <td>Sep 18, 3:46 pm</td>
+    </tr>
+    {{/each}}
+</script>
+{% endraw %}
+
+<script>
+    var treeData = [{
+        text: 'All',
+        state: {
+            selected: true
+        },
+        data: {},
+        nodes: []
+    }];
+
+    $(document).ready(function() {
+
+        var template = document.getElementById('template').innerHTML;
+        var handlebar_template = Handlebars.compile(template);
+        var cidrGroup = {};
+
+        $.get('/api/clients', function(data) {
+            // console.log(data);
+            var clients = data.response;
+            cidrGroup = {};
+
+            for (var i in clients) {
+                var ipaddr = clients[i].hostIpV4;
+                var split = ipaddr.split('.');
+                split.splice(3);
+                var cidr = split.join('.') + '.0/24';
+                clients[i].cidr = cidr;
+
+                if (cidrGroup[cidr] == undefined) {
+                    cidrGroup[cidr] = [];
+                }
+                cidrGroup[cidr].push(clients[i]);
+            }
+
+            for (var cidr in cidrGroup) {
+                treeData[0].nodes.push({
+                    text: cidr
+                });
+            }
+
+            cidrGroup.All = clients;
+
+            var bindData = {};
+            bindData.clients = data.response;
+
+            var rendered = handlebar_template(bindData);
+            document.getElementById('tbody').innerHTML = rendered;
+
+            $('#tree').treeview({
+                data: treeData,
+                onNodeSelected: function(event, data) {
+                    console.log(data);
+                    var cidr = data.text;
+                    var bindData = {
+                        clients: cidrGroup[cidr]
+                    };
+                    var rendered = handlebar_template(bindData);
+                    document.getElementById('tbody').innerHTML = rendered;
+                }
+            });
+        });
+    })
+</script>
+{% endblock %}

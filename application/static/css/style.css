@@ -1,0 +1,20 @@
+
+/*
+
+Simple introduction to Sass stylesheets
+
+*/
+
+// Variables in CSS? Awesome.
+
+$css-color-variable: #EFEFEF;
+
+
+// For all specified DOM elements beneath div main 
+// This uses hierarchy design to scope properties
+
+.main{
+	h1{
+		color: $css-color-variable;
+	}
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="">
+    <title>Cisco DNAC</title>
+
+    <!-- Locally Stored CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'bootstrap-4.5.2/css/bootstrap.min.css')}}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'bootstrap/css/bootstrap.min.css')}}" />
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename = 'bootstrap/css/bootstrap.css')}}"/> -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename = 'lib/search-bar/component.css')}}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'lib/scroll-bar/jquery.scrollbar.min.css')}}" /> -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename = 'lib/hover/hover.css')}}" /> -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename = 'lib/waves/waves.css')}}" /> -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename = 'lib/weather/weather.css')}}" /> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'lib/animate/animate.css')}}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'lib/datatables/dt.bootstrap.min.css')}}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'lib/bootstrap-datepicker/css/bootstrap-datepicker3.standalone.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'lib/treeview/bootstrap-treeview.min.css') }}">
+
+    <!-- Custom starter CSS - Sass gen -->
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/main.css') }}">
+
+    <script src="{{ url_for('static', filename = 'lib/jquery/jquery-2.2.0.min.js')}}"></script>
+    <script src="{{ url_for('static', filename = 'lib/moment/moment.min.js')}}"></script>
+    <script src="{{ url_for('static', filename = 'bootstrap/js/bootstrap.min.js')}}"></script>
+    <script src="{{ url_for('static', filename = 'lib/jquery-ui/jquery-ui-1.11.4.js')}}"></script>
+    <script src="{{ url_for('static', filename = 'lib/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
+    <!-- <script src="{{ url_for('static', filename = 'lib/parsley/parsley.min.js')}}"></script> -->
+    <script src="{{ url_for('static', filename = 'lib/treeview/bootstrap-treeview.min.js')}}"></script>
+    <script src="{{ url_for('static', filename = 'lib/handlebars/handlebars.js')}}"></script>
+
+</head>
+
+<body>
+
+
+
+    {% block body %} {% endblock %}
+
+
+</body>
+
+</html>

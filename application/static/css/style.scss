@@ -1,0 +1,17 @@
+
+/*
+
+Simple introduction to Sass stylesheets
+
+*/
+
+
+$css-color-variable: #EFEFEF;
+
+/* For all specified DOM elements beneath div main */
+
+.main{
+	h1{
+		color: $css-color-variable;
+	}
+}

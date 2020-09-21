@@ -1,3 +1,10 @@
+# Samsung DNAC 클라이언트 화면
+
+## how to run it.
+ docker build --tag dnac-client:1.0 .
+ docker run -p 5000:5000 dnac-client:1.0
+
+
 # flask-bootstrap
 
 [Publication Revision 1]

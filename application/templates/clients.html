@@ -22,12 +22,13 @@
                     <tr>
                         <th scope="col">identifier</th>
                         <th scope="col">IPv4 Address</th>
-                        <th scope="col">Device Type</th>
+                        <th scope="col">VLAN</th>
                         <th scope="col">Health</th>
                         <th scope="col">Usage</th>
                         <th scope="col">Switch</th>
                         <th scope="col">Port</th>
                         <th scope="col">Location</th>
+                        <th scope="col">Device Type</th>
                         <th scope="col">Last Seen</th>
                     </tr>
                 </thead>
@@ -50,14 +51,19 @@
 <script id="template" type="text/x-handlebars-template">
     {{#each clients}}
     <tr>
-        <td>{{hostType}} {{hostIpV4}}</td>
+        <td>
+            {{#ifEquals hostType 'WIRED'}}
+            <i class="fas fa-network-wired"></i> {{/ifEquals}} {{#ifEquals hostType 'WIRELESS'}}
+            <i class="fas fa-wifi"></i> {{/ifEquals}} {{hostIpV4}}
+        </td>
         <td>{{hostIpV4}}</td>
-        <td>--</td>
+        <td>{{vlanId}}</td>
         <td>{{healthScore.0.score}}</td>
         <td>{{usage}} kB</td>
         <td>{{clientConnection}}</td>
         <td>{{port}}</td>
         <td>{{location}} </td>
+        <td>--</td>
         <td>Sep 18, 3:46 pm</td>
     </tr>
     {{/each}}
@@ -65,8 +71,13 @@
 {% endraw %}
 
 <script>
+    Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
+        return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+    });
+
     var treeData = [{
         text: 'All',
+        showTags: true,
         state: {
             selected: true
         },
@@ -100,10 +111,12 @@
 
             for (var cidr in cidrGroup) {
                 treeData[0].nodes.push({
-                    text: cidr
+                    text: cidr,
+                    tags: [cidrGroup[cidr].length]
                 });
             }
 
+            treeData[0].tags = [clients.length];
             cidrGroup.All = clients;
 
             var bindData = {};
@@ -114,6 +127,8 @@
 
             $('#tree').treeview({
                 data: treeData,
+                showTags: true,
+                tagsClass: 'label label-default',
                 onNodeSelected: function(event, data) {
                     console.log(data);
                     var cidr = data.text;

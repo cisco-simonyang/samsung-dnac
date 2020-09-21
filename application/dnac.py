@@ -17,34 +17,6 @@ def login(ip, username, password):
     return res_json['Token']
 
 
-# def get_clients(ip, token):
-#     url = 'https://%s/dna/intent/api/v1/network-device' % ip
-#     headers = {
-#         'Content-Type' : 'application/json',
-#         'X-Auth-Token' : token
-#     }
-
-#     print ('%s, %s' % (ip, token))
-#     res = requests.get(url, headers=headers, verify=False)
-#     res_json = res.json()
-#     print('%s' % res_json)
-#     return res_json
-
-
-# def get_clients(ip, token):
-#     url = 'https://%s/api/v1/host' % ip
-#     headers = {
-#         'Content-Type' : 'application/json',
-#         'X-Auth-Token' : token
-#     }
-
-#     print ('%s, %s' % (ip, token))
-#     res = requests.get(url, headers=headers, verify=False)
-#     res_json = res.json()
-#     print('%s' % res_json)
-#     return res_json
-
-
 def get_clients(ip, token):
     data = {}
     url = 'https://%s/api/assurance/v1/host' % ip

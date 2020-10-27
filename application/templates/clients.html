@@ -125,6 +125,14 @@
             var rendered = handlebar_template(bindData);
             document.getElementById('tbody').innerHTML = rendered;
 
+            treeData[0].nodes.sort((a, b) => {
+                a = a.text.split('/')[0];
+                b = b.text.split('/')[0];
+                const num1 = Number(a.split(".").map((num) => (`000${num}`).slice(-3)).join(""));
+                const num2 = Number(b.split(".").map((num) => (`000${num}`).slice(-3)).join(""));
+                return num1 - num2;
+            });
+
             $('#tree').treeview({
                 data: treeData,
                 showTags: true,

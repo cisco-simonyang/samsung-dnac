@@ -130,7 +130,6 @@
                 b = b.text.split('/')[0];
                 const num1 = Number(a.split(".").map((num) => (`000${num}`).slice(-3)).join(""));
                 const num2 = Number(b.split(".").map((num) => (`000${num}`).slice(-3)).join(""));
-                return num1 - num2;
             });
 
             $('#tree').treeview({
